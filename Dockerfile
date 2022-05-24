@@ -1,10 +1,15 @@
-FROM node:12
-RUN mkdir -p /opt/app
-WORKDIR /opt/app
-RUN adduser app
-COPY addressbook/ .
+FROM node:latest
+
+#Create Directory
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
+
+#Copy Json project
+COPY package.json /usr/src/app
 RUN npm install
-RUN chown -R app:app /opt/app
-USER app
-EXPOSE 3000
-CMD [ "npm", "run", "pm2" ]
+
+COPY . /usr/src/app
+
+EXPOSE 5000
+
+CMD [ "npm","start" ]
